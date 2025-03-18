@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación de Graduación</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+        body {
+         font-family: 'Poppins', sans-serif;
+         text-align: center;
+         background: linear-gradient(to right, #6a11cb, #b95691);
+         padding: 20px;
+         color: white;
+         animation: fadeIn 1s ease-in-out;
+         background-image: url('TEC.jpg'); /* Cambia por la URL de tu logo */
+         background-repeat: repeat; /* Hace que el logo se repita */
+         background-size: 100px 100px; /* Ajusta el tamaño del logo */
+         background-position: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            color: #333;
+            max-width: 500px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: #6a11cb;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        #mapa {
+            width: 100%;
+            height: 250px;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .time-box {
+            background: linear-gradient(135deg, #b31a61, #b3688b);
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 14px;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            font-size: 20px;
+            background: linear-gradient(135deg, #7018db, #7c699b);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #aa7abb, #d325ad);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 ¡GRADUACIÓN! 🎓</h1>
+        <p>📅 Fecha: <strong>12 de abril de 2025</strong></p>
+        <p>📍 Lugar:</p>
+        <iframe id="mapa"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.9607478820863!2d-101.034828!3d25.449678!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjUuNDQ5Njc4LCAtMTAxLjAzNDgyOA!5e0!3m2!1ses-419!2smx!4v1647123456789"
+            width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy">
+        </iframe>
+
+        <p>⏳ La cuenta regresiva comienza ahora:</p>
+        <div id="countdown">
+            <div class="time-box"><span>DÍAS</span></div>
+            <div class="time-box"><span>HORAS</span></div>
+            <div class="time-box"><span>MINUTOS</span></div>
+            <div class="time-box"><span>SEGUNDOS</span></div>
+        </div>
+        <a id="whatsappButton" class="btn" href="#" target="_blank">📩 Confirmar asistencia</a>
+    </div>
+    
+    <script>
+        function actualizarCuentaRegresiva() {
+            const fechaEvento = new Date("April 12, 2025 00:00:00").getTime();
+            const intervalo = setInterval(() => {
+                const ahora = new Date().getTime();
+                const diferencia = fechaEvento - ahora;
+
+                if (diferencia <= 0) {
+                    clearInterval(intervalo);
+                    document.getElementById("countdown").innerHTML = "🎉 ¡El gran día ha llegado! 🎉";
+                    return;
+                }
+
+                const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+                const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+                const timeBoxes = document.querySelectorAll('.time-box');
+                timeBoxes[0].innerHTML = `<strong>${dias}</strong><span>DÍAS</span>`;
+                timeBoxes[1].innerHTML = `<strong>${horas}</strong><span>HORAS</span>`;
+                timeBoxes[2].innerHTML = `<strong>${minutos}</strong><span>MINUTOS</span>`;
+                timeBoxes[3].innerHTML = `<strong>${segundos}</strong><span>SEGUNDOS</span>`;
+            }, 1000);
+        }
+        actualizarCuentaRegresiva();
+
+        // Configuración del botón de WhatsApp
+        const numeroWhatsApp = "8443564575"; // Reemplaza con tu número
+        const mensaje = encodeURIComponent("Hola, confirmo mi asistencia a la graduación.");
+        document.getElementById("whatsappButton").href = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+    </script>
+</body>
+</html>
